@@ -9,9 +9,9 @@ class OrdersController < ApplicationController
     order  = create_order(charge)
 
     if order.valid?
+      OrderMailer.order_receipt(order).deliver_now
       empty_cart!
-      redirect_to order, notice: "THIS SUCKS"
-      OrderMailer.order_receipt(@order).deliver_now
+      redirect_to order, notice: "Your order has been placed!"
     end
 
   rescue Stripe::CardError => e

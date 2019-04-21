@@ -21,10 +21,45 @@
           <dt>Quantity</dt>
           <dd><%= @product.quantity %></dd>
           <dt>Price</dt>
-          <dd><%= @product.price %></dd>
+          <dd>$<%= @product.price %></dd>
         </dl>
       </div>
-    </div>
+
+      <h4 style="text-align:center;">Reviews</h4>
+      <% @product.reviews.where.not(id:nil).reverse.each do |review| %>
+        <div class="col-sm-8">
+        <dl class="dl-horizontal">
+          <dt>Name</dt>
+          <dd><%= User.find_by(id: review.user_id).first_name + " " + User.find_by(id: review.user_id).last_name.first + "." %></dd>
+          <dt>Description</dt>
+          <dd><%= review.description %></dd>
+          <dt>Rating</dt>
+          <dd><%= review.rating %></dd>
+          <dt>Date</dt>
+          <dd><%= review.created_at.to_date %></dd>
+          <% if current_user.id == review.user_id %>
+          <%= link_to 'Delete', [@product, review], method: :delete %>
+          <% end %>
+  
+        </dl>
+      </div>
+        <% end %>
+       <% if @current_user %>
+      <h4 style="text-align:center;">Add a review</h4>
+  <%= form_for([@product, @review]) do |form| %>
+      <%= form.label :rating %>
+      <%= form.select :rating, options_for_select(["", 1, 2, 3, 4, 5]) %>
+    <p>
+      <%= form.label :description %>
+      <%= form.text_area :description %>
+    </p>
+    <p><%= form.submit "Add review" %></p>
+     <% end%>
+     <% end %>
+
+</div>
+</div>
+
 
   </article>
 

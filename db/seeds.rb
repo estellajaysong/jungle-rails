@@ -132,5 +132,43 @@ cat3.products.create!({
   price: 2_483.75
 })
 
+puts "Creating users"
+
+User.create!({
+  first_name: "John",
+  last_name: "Johnson",
+  email: "jjohnson@gmail.com",
+  password_digest: "Johnson"
+})
+
+User.create!({
+  first_name: "Bob",
+  last_name: "Bobson",
+  email: "billybob@gmail.com",
+  password_digest: "Bobson"
+})
+
+puts "Creating reviews"
+
+Review.create!({
+  product_id: 12,
+  user_id: 1,
+  description: 'Cute, but not really worth the price',
+  rating: 2
+})
+
+Review.create!({
+  product_id: 12,
+  user_id: 2,
+  description: 'Can hold at least 5 books',
+  rating: 4
+})
+
+Review.create!({
+  product_id: 11,
+  user_id: 2,
+  description: 'I heard Ted Bundy had the same one!',
+  rating: 5
+})
 
 puts "DONE!"
